@@ -1,8 +1,23 @@
 spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&useSSL=true&allowPublicKeyRetrieval=true&sslMode=VERIFY_IDENTITY&serverTimezone=UTC}
+    username: ${DATABASE_USERNAME:${DB_USER:root}}
+    password: ${DATABASE_PASSWORD:${DB_PASSWORD:}}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
   thymeleaf:
     mode: HTML
   profiles:
-    active: dev
+    active: ${SPRING_PROFILES_ACTIVE:pro}
   messages:
     basename: i18n/messages
   servlet:
@@ -10,6 +25,9 @@ spring:
       enabled: true
       max-file-size: 10MB
       max-request-size: 10MB
+
+server:
+  port: ${PORT:8080}
 
 file:
   upload:
