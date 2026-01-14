@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories</title>
+</head>
+<body class="bg-gray-50">
+
+  <!--Navigation-->
+  <nav th:replace="_fragments :: menu(2)"></nav>
+
+  <!--Main Content-->
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    
+    <!--Header-->
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-2xl font-semibold text-gray-900">Categories</h1>
+      <span class="text-sm text-gray-500">
+        Total <span class="font-medium text-gray-900" th:text="${#arrays.length(types)}">14</span>
+      </span>
+    </div>
+
+    <!--Category Tags-->
+    <div class="bg-white rounded-lg border border-gray-100 p-6 mb-8">
+      <div class="flex flex-wrap gap-2">
+        <a th:href="@{/types/{id}(id=${type.id})}" 
+           th:classappend="${type.id==activeTypeId} ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-gray-100 text-gray-700 border-gray-200'"
+           class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-full border transition-colors hover:bg-gray-50"
+           th:each="type : ${types}">
+          <span th:text="${type.name}">思考与感悟</span>
+          <span class="text-xs" th:text="${#arrays.length(type.blogs)}">24</span>
+        </a>
+      </div>
+    </div>
+
+    <!--Blog List-->
+    <div class="space-y-6" th:if="${page != null and page.content != null and !page.content.isEmpty()}">
+      <article th:each="blog : ${page.content}" 
+               class="group bg-white rounded-lg border border-gray-100 p-6 hover:shadow-sm transition-shadow">
+        <div class="flex flex-col md:flex-row gap-6">
+          
+          <!-- 文本内容 -->
+          <div class="flex-1 space-y-3">
+            <h2 class="text-xl font-semibold text-gray-900 group-hover:text-blue-500 transition-colors">
+              <a th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" th:text="${blog.title}">你真的理解什么是财富自由吗?</a>
+            </h2>
+            
+            <p class="text-gray-600 leading-relaxed line-clamp-2" th:text="|${blog.description}...|">
+              正确做好任何一件事情的前提是清晰、正确的理解目标。而事实是，我们很多人很多时候根本没有对目标正确的定义，甚至根本从来就没有想过，只是大家都那么做而已…
+            </p>
+            
+            <div class="flex items-center justify-between pt-2">
+              <div class="flex items-center gap-4 text-sm text-gray-500">
+                <div class="flex items-center gap-1.5">
+                  <img th:src="@{${blog.user.avatar}}" 
+                       alt="" 
+                       class="w-5 h-5 rounded-full object-cover">
+                  <span th:text="${blog.user.nickname}">maxine</span>
+                </div>
+                <span th:text="${#dates.format(blog.createTime,'yyyy-MM-dd')}">2017-10-01</span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  </svg>
+                  <span th:text="${blog.views}">2342</span>
+                </span>
+              </div>
+              
+              <a th:href="@{/types/{id}(id=${blog.type.id})}" 
+                 class="px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
+                 th:text="${blog.type.name}">认知升级</a>
+            </div>
+          </div>
+
+          <!-- 图片 -->
+          <div class="md:w-48 flex-shrink-0" th:if="${blog.firstPicture != null and blog.firstPicture != ''}">
+            <a th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="block">
+              <img th:src="@{${blog.firstPicture}}" 
+                   alt="" 
+                   class="w-full h-32 object-cover rounded-lg">
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!--Pagination-->
+    <div th:if="${page != null and page.totalPages > 1}" class="flex items-center justify-between pt-8 mt-8 border-t border-gray-100">
+      <a th:href="@{'/types/'+${activeTypeId}(page=${page.number}-1)}" 
+         th:unless="${page.first}"
+         class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+        Previous
+      </a>
+      <div th:unless="${page.first}" class="flex-1"></div>
+      
+      <span class="text-sm text-gray-500">
+        Page <span class="font-medium text-gray-900" th:text="${page.number + 1}">1</span> of <span class="font-medium text-gray-900" th:text="${page.totalPages}">1</span>
+      </span>
+      
+      <div th:unless="${page.last}" class="flex-1"></div>
+      <a th:href="@{'/types/'+${activeTypeId}(page=${page.number}+1)}" 
+         th:unless="${page.last}"
+         class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+        Next
+      </a>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <footer th:replace="_fragments :: footer"></footer>
+
+  <!-- Scripts -->
+  <th:block th:replace="_fragments :: script"></th:block>
+</body>
+</html>

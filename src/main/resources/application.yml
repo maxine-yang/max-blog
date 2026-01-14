@@ -1,0 +1,19 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  profiles:
+    active: dev
+  messages:
+    basename: i18n/messages
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+file:
+  upload:
+    path: src/main/resources/static/images/uploads
+
+comment.avatar: /images/avatar.png
+

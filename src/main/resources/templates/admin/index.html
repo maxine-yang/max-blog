@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>maxine's blog - Admin Panel</title>
+</head>
+<body class="bg-gray-50">
+
+  <!--Navigation-->
+  <nav th:replace="admin/_fragments :: menu(0)"></nav>
+
+  <!--Main Content-->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-lg border border-gray-100 p-8 mb-8">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-2">Hi,</h2>
+      <p class="text-gray-600">maxine, welcome to the admin panel!</p>
+    </div>
+
+    <!-- ECharts Calendar Heatmap -->
+    <div class="bg-white rounded-lg border border-gray-100 p-6">
+      <h3 class="text-lg font-semibold text-gray-900 mb-6">Statistics - Blog Publishing Heatmap</h3>
+      <div id="calendar-heatmap" style="width: 100%; height: 180px;"></div>
+    </div>
+  </div>
+
+  <!--Footer-->
+  <footer th:replace="admin/_fragments :: footer"></footer>
+
+  <!-- Scripts -->
+  <th:block th:replace="admin/_fragments :: script"></th:block>
+  
+  <script>
+    // Initialize ECharts calendar heatmap
+    async function initCalendarHeatmap() {
+      try {
+        // Fetch data
+        const response = await fetch('/admin/api/blog-stats-echarts');
+        const data = await response.json();
+        
+        // Calculate date range (365 days back from today, ensuring the leftmost is a complete week)
+        const today = new Date();
+        const endDate = formatDate(today);
+        
+        // Calculate start date (365 days back)
+        const startDateObj = new Date(today);
+        startDateObj.setDate(today.getDate() - 365);
+        
+        // Adjust start date to Sunday of that week (ensuring the leftmost is a complete week)
+        const dayOfWeek = startDateObj.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        startDateObj.setDate(startDateObj.getDate() - dayOfWeek);
+        
+        const startDate = formatDate(startDateObj);
+        
+        // Initialize ECharts instance
+        const chartDom = document.getElementById('calendar-heatmap');
+        const myChart = echarts.init(chartDom);
+        
+        // Configuration options
+        const option = {
+          tooltip: {
+            position: 'top',
+            formatter: function (params) {
+              if (params.value && params.value[1] > 0) {
+                return params.value[0] + '<br/>Posts: ' + params.value[1];
+              }
+              return params.value[0] + '<br/>No posts';
+            },
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            borderColor: 'transparent',
+            textStyle: {
+              color: '#fff',
+              fontSize: 12
+            }
+          },
+          visualMap: {
+            min: 0,
+            max: 4,
+            type: 'piecewise',
+            pieces: [
+              {min: 0, max: 0, color: '#ebedf0'},
+              {min: 1, max: 1, color: '#c6e48b'},
+              {min: 2, max: 2, color: '#7bc96f'},
+              {min: 3, max: 3, color: '#239a3b'},
+              {min: 4, max: 4, color: '#196127'}
+            ],
+            calculable: false,
+            show: false,
+            orient: 'horizontal',
+            left: 'center',
+            bottom: 0
+          },
+          calendar: {
+            top: 20,
+            left: 40,
+            right: 15,
+            bottom: 10,
+            cellSize: 11,
+            range: [startDate, endDate],
+            itemStyle: {
+              borderWidth: 1,
+              borderColor: '#fff',
+              borderRadius: 2,
+              color: '#ebedf0'
+            },
+            cellLabel: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            },
+            yearLabel: {
+              show: false
+            },
+            monthLabel: {
+              nameMap: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+              fontSize: 11,
+              color: '#767676',
+              margin: 4
+            },
+            dayLabel: {
+              nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+              fontSize: 10,
+              color: '#767676',
+              margin: 2
+            }
+          },
+          series: [{
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: data,
+            itemStyle: {
+              borderWidth: 1,
+              borderColor: '#fff',
+              borderRadius: 2
+            },
+            emphasis: {
+              itemStyle: {
+                borderWidth: 3,
+                borderColor: '#0284C7',
+                shadowBlur: 4,
+                shadowColor: 'rgba(0, 0, 0, 0.2)'
+              }
+            }
+          }]
+        };
+        
+        myChart.setOption(option);
+        
+        // Responsive adjustment
+        window.addEventListener('resize', function () {
+          myChart.resize();
+        });
+      } catch (error) {
+        console.error('Failed to initialize calendar heatmap:', error);
+      }
+    }
+    
+    // Format date as YYYY-MM-DD
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    
+    // Initialize on page load
+    if (typeof echarts !== 'undefined') {
+      initCalendarHeatmap();
+    } else {
+      window.addEventListener('load', function() {
+        initCalendarHeatmap();
+      });
+    }
+  </script>
+</body>
+</html>

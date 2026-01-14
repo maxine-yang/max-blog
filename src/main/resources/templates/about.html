@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me</title>
+  <style>
+    /* 復古風格字體和樣式 */
+    body {
+      font-family: 'Georgia', 'Times New Roman', 'Songti SC', 'SimSun', serif;
+      background-color: #f5f5f0;
+      color: #2c2c2c;
+    }
+    .about-content {
+      font-family: 'Georgia', 'Times New Roman', 'Songti SC', 'SimSun', serif;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+    }
+    .about-content p {
+      margin-bottom: 0.75rem;
+      line-height: 1.5;
+    }
+    .vintage-card {
+      background-color: #fafafa;
+      border: 1px solid #d4d4d4;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .vintage-title {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .vintage-text {
+      color: #3a3a3a;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!--Navigation-->
+  <nav th:replace="_fragments :: menu(5)"></nav>
+
+  <!--Main Content-->
+  <div class="max-w-6xl mx-auto px-2 sm:px-4 lg:px-6 py-12">
+    <!-- About Me - Main Section -->
+    <div class="mb-8 max-w-4xl mx-auto">
+      <div class="vintage-card rounded-lg p-8">
+        <div class="flex flex-col md:flex-row gap-8">
+          <!-- Avatar -->
+          <div class="flex-shrink-0">
+            <img th:src="@{/images/avatar.png}" 
+                 src="/images/avatar.png" 
+                 alt="maxine" 
+                 class="w-40 aspect-[2/3] object-cover border-2 border-gray-300">
+          </div>
+          
+          <!-- Personal Introduction -->
+          <div class="flex-1 about-content">
+            <h1 class="text-3xl vintage-title text-gray-900 mb-3">maxine</h1>
+            <div class="text-base vintage-text">
+              <p>I write code, and I read a lot.</p>
+              <p>I like to organize what I learn and turn it into output, gradually building my own system of thinking.</p>
+              <p>In my free time, I create fan works, draw, and study languages.</p>
+              <p>To me, logic and creativity are not opposites — they strengthen each other.</p>
+              <p>I currently live and work in a cross-cultural environment, and I take long-term growth and self-improvement seriously.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top: Heatmap (Full Width) -->
+    <div class="mb-8">
+      <div class="vintage-card rounded-lg p-6">
+        <h3 class="text-lg vintage-title text-gray-900 mb-4">Creation Journey</h3>
+        <div id="calendar-heatmap" style="width: 100%; height: 180px;"></div>
+      </div>
+    </div>
+    
+    <!-- Bottom: Interests, Tech Stack, Contact (Horizontal Layout) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Interests -->
+      <div class="vintage-card rounded-lg p-6">
+        <h3 class="text-lg vintage-title text-gray-900 mb-4">Interests</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 text-xs font-medium text-orange-800 bg-orange-50 rounded border border-orange-200">Programming</span>
+          <span class="px-3 py-1 text-xs font-medium text-orange-800 bg-orange-50 rounded border border-orange-200">Reading</span>
+          <span class="px-3 py-1 text-xs font-medium text-orange-800 bg-orange-50 rounded border border-orange-200">Writing</span>
+          <span class="px-3 py-1 text-xs font-medium text-orange-800 bg-orange-50 rounded border border-orange-200">Fan Creation</span>
+          <span class="px-3 py-1 text-xs font-medium text-orange-800 bg-orange-50 rounded border border-orange-200">Drawing</span>
+          <span class="px-3 py-1 text-xs font-medium text-orange-800 bg-orange-50 rounded border border-orange-200">Language Learning</span>
+        </div>
+      </div>
+      
+      <!-- Tech Stack -->
+      <div class="vintage-card rounded-lg p-6">
+        <h3 class="text-lg vintage-title text-gray-900 mb-4">Tech Stack</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Java</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Spring Boot</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">SSM</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">MySQL</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">MongoDB</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Git</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">GitHub</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Jenkins</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">RESTful API</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">HTML/CSS</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">JavaScript</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">TypeScript</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Vue 3</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">React</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Next.js</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Node.js</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Express</span>
+          <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-50 rounded border border-blue-200">Tailwind CSS</span>
+        </div>
+      </div>
+      
+      <!-- Contact -->
+      <div class="vintage-card rounded-lg p-6">
+        <h3 class="text-lg vintage-title text-gray-900 mb-4">Contact</h3>
+        <div class="flex gap-4">
+          <a href="https://github.com/maxine-yang" target="_blank" class="text-gray-600 hover:text-gray-900 transition-colors" title="GitHub">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+          <a href="mailto:hamanomax01@gmail.com" class="text-gray-600 hover:text-gray-900 transition-colors" title="Email">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--底部footer-->
+  <footer th:replace="_fragments :: footer"></footer>
+
+  <!-- Scripts -->
+  <th:block th:replace="_fragments :: script"></th:block>
+  
+  <script>
+    // 初始化 ECharts 日曆熱力圖
+    async function initCalendarHeatmap() {
+      try {
+        // 獲取數據
+        const response = await fetch('/api/blog-stats-echarts');
+        const data = await response.json();
+        
+        // Calculate date range (365 days back from today, ensuring the leftmost is a complete week)
+        const today = new Date();
+        const endDate = formatDate(today);
+        
+        // Calculate start date (365 days back)
+        const startDateObj = new Date(today);
+        startDateObj.setDate(today.getDate() - 365);
+        
+        // Adjust start date to Sunday of that week (ensuring the leftmost is a complete week)
+        const dayOfWeek = startDateObj.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+        startDateObj.setDate(startDateObj.getDate() - dayOfWeek);
+        
+        const startDate = formatDate(startDateObj);
+        
+        // Initialize ECharts instance
+        const chartDom = document.getElementById('calendar-heatmap');
+        const myChart = echarts.init(chartDom);
+        
+        // Configuration options
+        const option = {
+          tooltip: {
+            position: 'top',
+            formatter: function (params) {
+              if (params.value && params.value[1] > 0) {
+                return params.value[0] + '<br/>Posts: ' + params.value[1];
+              }
+              return params.value[0] + '<br/>No posts';
+            },
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            borderColor: 'transparent',
+            textStyle: {
+              color: '#fff',
+              fontSize: 12
+            }
+          },
+          visualMap: {
+            min: 0,
+            max: 4,
+            type: 'piecewise',
+            pieces: [
+              {min: 0, max: 0, color: '#ebedf0'},
+              {min: 1, max: 1, color: '#c6e48b'},
+              {min: 2, max: 2, color: '#7bc96f'},
+              {min: 3, max: 3, color: '#239a3b'},
+              {min: 4, max: 4, color: '#196127'}
+            ],
+            calculable: false,
+            show: false,
+            orient: 'horizontal',
+            left: 'center',
+            bottom: 0
+          },
+          calendar: {
+            top: 20,
+            left: 40,
+            right: 15,
+            bottom: 10,
+            cellSize: 11,
+            range: [startDate, endDate],
+            itemStyle: {
+              borderWidth: 1,
+              borderColor: '#fff',
+              borderRadius: 2,
+              color: '#ebedf0'
+            },
+            cellLabel: {
+              show: false
+            },
+            splitLine: {
+              show: false
+            },
+            yearLabel: {
+              show: false
+            },
+            monthLabel: {
+              nameMap: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+              fontSize: 11,
+              color: '#767676',
+              margin: 4
+            },
+            dayLabel: {
+              nameMap: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+              fontSize: 10,
+              color: '#767676',
+              margin: 2
+            }
+          },
+          series: [{
+            type: 'heatmap',
+            coordinateSystem: 'calendar',
+            data: data,
+            itemStyle: {
+              borderWidth: 1,
+              borderColor: '#fff',
+              borderRadius: 2
+            },
+            emphasis: {
+              itemStyle: {
+                borderWidth: 3,
+                borderColor: '#0284C7',
+                shadowBlur: 4,
+                shadowColor: 'rgba(0, 0, 0, 0.2)'
+              }
+            }
+          }]
+        };
+        
+        myChart.setOption(option);
+        
+        // Responsive adjustment
+        window.addEventListener('resize', function () {
+          myChart.resize();
+        });
+      } catch (error) {
+        console.error('Failed to initialize calendar heatmap:', error);
+      }
+    }
+    
+    // Format date as YYYY-MM-DD
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    
+    // Initialize on page load
+    if (typeof echarts !== 'undefined') {
+      initCalendarHeatmap();
+    } else {
+      window.addEventListener('load', function() {
+        initCalendarHeatmap();
+      });
+    }
+  </script>
+</body>
+</html>

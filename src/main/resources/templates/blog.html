@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="_fragments :: head(~{::title})">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${blog != null and blog.title != null ? blog.title : 'Blog Details'}">Blog Details</title>
+  <link rel="stylesheet" href="../static/lib/prism/prism.css" th:href="@{/lib/prism/prism.css}">
+  <!-- tocbot CSS not needed as there is no table of contents functionality -->
+  <!-- <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css" th:href="@{/lib/tocbot/tocbot.css}"> -->
+  <link rel="stylesheet" href="../static/css/typo.css" th:href="@{/css/typo.css}">
+</head>
+<body class="bg-gray-50">
+<style>
+    body {
+      background-color: #F9FAFB !important;
+      color: #111827 !important;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+      line-height: 1.7;
+    }
+    .blog-layout {
+      max-width: 1200px !important;
+      margin: 0 auto !important;
+      padding: 3rem 1.5rem !important;
+      display: grid !important;
+      grid-template-columns: 1fr 320px !important;
+      gap: 3rem !important;
+      align-items: start !important;
+    }
+    .blog-main {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+    .blog-card {
+      background: white !important;
+      border-radius: 0.75rem !important;
+      border: 1px solid #E5E7EB !important;
+      padding: 3rem !important;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .blog-header {
+      margin-bottom: 3rem !important;
+      padding-bottom: 1.5rem !important;
+      border-bottom: 1px solid #E5E7EB !important;
+    }
+    .blog-title {
+      font-size: 2.25rem !important;
+      font-weight: 700 !important;
+      color: #111827 !important;
+      margin-bottom: 1.5rem !important;
+      line-height: 1.2 !important;
+    }
+    .blog-meta {
+      font-size: 0.875rem !important;
+      color: #6B7280 !important;
+      line-height: 1.6 !important;
+    }
+    .blog-meta span {
+      color: #111827 !important;
+      font-weight: 500 !important;
+    }
+    .blog-content {
+      color: #374151 !important;
+      font-size: 1.125rem !important;
+      line-height: 1.8 !important;
+    }
+    .blog-content h1,
+    .blog-content h2,
+    .blog-content h3,
+    .blog-content h4,
+    .blog-content h5,
+    .blog-content h6 {
+      color: #111827 !important;
+      font-weight: 600 !important;
+      margin-top: 2rem !important;
+      margin-bottom: 1rem !important;
+    }
+    .blog-content p {
+      margin-bottom: 1.5rem !important;
+    }
+    .blog-content img {
+      max-width: 100% !important;
+      height: auto !important;
+      border-radius: 0.5rem !important;
+      margin: 2rem 0 !important;
+    }
+    .blog-content pre {
+      background-color: #F3F4F6 !important;
+      padding: 1rem !important;
+      border-radius: 0.5rem !important;
+      overflow-x: auto !important;
+      margin: 1.5rem 0 !important;
+    }
+    .blog-content code {
+      background-color: #F3F4F6 !important;
+      padding: 0.125rem 0.375rem !important;
+      border-radius: 0.25rem !important;
+      font-size: 0.875em !important;
+    }
+    .blog-content blockquote {
+      border-left: 4px solid #E5E7EB !important;
+      padding-left: 1.5rem !important;
+      margin: 1.5rem 0 !important;
+      color: #6B7280 !important;
+    }
+    .blog-sidebar {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+    .sidebar-card {
+      background: white !important;
+      border-radius: 0.75rem !important;
+      border: 1px solid #E5E7EB !important;
+      padding: 1.5rem !important;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .sidebar-title {
+      font-size: 1.125rem !important;
+      font-weight: 600 !important;
+      color: #111827 !important;
+      margin-bottom: 1.5rem !important;
+      padding-bottom: 0.75rem !important;
+      border-bottom: 1px solid #E5E7EB !important;
+    }
+    .recent-blog-item {
+      padding: 1rem 0 !important;
+      border-bottom: 1px solid #F3F4F6 !important;
+    }
+    .recent-blog-item:last-child {
+      border-bottom: none !important;
+    }
+    .recent-blog-item a {
+      display: block !important;
+      text-decoration: none !important;
+      color: #111827 !important;
+      font-weight: 500 !important;
+      margin-bottom: 0.5rem !important;
+      transition: color 0.2s !important;
+    }
+    .recent-blog-item a:hover {
+      color: #0EA5E9 !important;
+    }
+    .recent-blog-date {
+      font-size: 0.875rem !important;
+      color: #6B7280 !important;
+    }
+    @media (max-width: 1024px) {
+      .blog-layout {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+      }
+      .blog-card {
+        padding: 2rem !important;
+      }
+    }
+    @media (max-width: 640px) {
+      .blog-layout {
+        padding: 2rem 1rem !important;
+      }
+      .blog-card {
+        padding: 1.5rem !important;
+      }
+      .blog-title {
+        font-size: 1.75rem !important;
+      }
+    }
+  </style>
+
+  <!--Navigation-->
+  <nav th:replace="_fragments :: menu(1)"></nav>
+
+  <!--Blog Content Layout-->
+  <div class="blog-layout" th:if="${blog != null}" style="display: grid !important; grid-template-columns: 1fr 320px !important; gap: 3rem !important; max-width: 1200px !important; margin: 0 auto !important; padding: 3rem 1.5rem !important;">
+    
+    <!-- Left: Blog Content -->
+    <div class="blog-main">
+      <article class="blog-card" style="background: white !important; border-radius: 0.75rem !important; border: 1px solid #E5E7EB !important; padding: 3rem !important; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important; width: 100% !important;">
+        <!-- Blog Title and Metadata -->
+        <header class="blog-header">
+          <h1 class="blog-title" th:text="${blog.title != null ? blog.title : 'No Title'}">Blog Title</h1>
+          <div class="blog-meta">
+            <span th:if="${blog.user != null and blog.user.nickname != null}" th:text="${blog.user.nickname}">maxine</span>
+            <span th:if="${blog.createTime != null}">on <span th:text="${#dates.format(blog.createTime,'MMM d, yyyy')}">Jan 10, 2026</span></span>
+            <span th:if="${blog.location != null and blog.location != ''}">in <span th:text="${blog.location}">Taipei</span></span>
+          </div>
+        </header>
+
+        <!-- Blog Content -->
+        <div class="blog-content typo typo-selection" th:utext="${blog.content != null ? blog.content : '<p>Content is empty</p>'}">
+          <p>This is blog content...</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Right: Recently Published Posts -->
+    <aside class="blog-sidebar">
+      <div class="sidebar-card" style="background: white !important; border-radius: 0.75rem !important; border: 1px solid #E5E7EB !important; padding: 1.5rem !important; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important; width: 100% !important; max-width: 100% !important;">
+        <h2 class="sidebar-title">Recent Posts</h2>
+        <div class="recent-blogs" th:if="${recentBlogs != null and !recentBlogs.isEmpty()}">
+          <div class="recent-blog-item" th:each="recentBlog : ${recentBlogs}">
+            <a th:href="@{/blog/{id}(id=${recentBlog.id})}" th:text="${recentBlog.title != null ? recentBlog.title : 'No Title'}">Post Title</a>
+            <div class="recent-blog-date" th:if="${recentBlog.createTime != null}" th:text="${#dates.format(recentBlog.createTime,'yyyy-MM-dd')}">2026-01-10</div>
+          </div>
+        </div>
+        <div th:if="${recentBlogs == null or recentBlogs.isEmpty()}" style="color: #6B7280 !important; font-size: 0.875rem !important;">
+          No posts yet
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!--Footer-->
+  <footer th:replace="_fragments :: footer"></footer>
+
+  <!-- Scripts -->
+  <th:block th:replace="_fragments :: script"></th:block>
+  <script src="../static/lib/prism/prism.js" th:src="@{/lib/prism/prism.js}"></script>
+  <!-- tocbot not needed as there is no table of contents element -->
+  <!-- <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script> -->
+</body>
+</html>
