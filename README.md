@@ -1,5 +1,7 @@
 # maxine's blog
 
+> 🌐 **Languages**: [English](README.md) | [日本語](README_ja.md)
+
 Personal blog project built with Spring Boot 3.2.0 and Java 17.
 
 ## About
